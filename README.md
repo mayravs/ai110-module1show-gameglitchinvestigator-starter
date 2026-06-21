@@ -25,30 +25,37 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
-- [ ] Detail which bugs you found.
-- [ ] Explain what fixes you applied.
+- **Purpose of this game:** The purpose of this game is to guess the correct number with a limited amount of attempts.
+- **Bug 1:** In this app, I found that the guess hints were inverted. When a hint was too high, you would get a suggestion to go higher instead of lower. 
+- **Bug 2:** I also found that if a player lost a game, they weren't able to start a new game and the game history never cleared. 
+- **Fix 1:** To fix the inverted hints issue, I used Claude AI to pinpoint the root of this bug. It led me to the check_guess function which displayed the wrong hint for any guess. By switching "Go lower" to when the guess was too high, and "Go higher" for when the guess was too low, the issue was resolved. 
+- **Fix 2:** To fix the new game issue, I again asked Claude AI to pinpoint the root of the problem. The issue originated from the game handler. Whenever a player lost, the game status changed to "lost" and stayed that way. The fix was to add 2 lines which changed the status to "playing" when a new game started, and cleared the guess history. 
 
 ## 📸 Demo Walkthrough
 
 Describe your fixed game in numbered steps so a reader can follow along without watching a video:
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
-
-**Screenshot** *(optional)*: <!-- Insert a screenshot of your fixed, winning game here -->
+1. User enters a guess of 54
+2. Game returns "Too high"
+3. User enters a guess of 4 → "Too Low"
+4. Score updates correctly after each guess
+5. Game ends after the correct guess
+6. User clicks new game 
+7. Game clears out guess history and restarts game
 
 ## 🧪 Test Results
 
 ```
-# Paste your pytest output here, e.g.:
-# pytest tests/
-# ========================= X passed in 0.XXs =========================
+# pytest tests/test_game_logic.py
+# tests/test_game_logic.py::test_new_game_after_loss_unblocks_play PASSED  [ 11%] 
+# tests/test_game_logic.py::test_new_game_after_win_unblocks_play PASSED   [ 22%]
+# tests/test_game_logic.py::test_new_game_clears_history PASSED            [ 33%]
+# tests/test_game_logic.py::test_new_game_resets_attempts PASSED           [ 44%]
+# tests/test_game_logic.py::test_winning_guess PASSED                      [ 55%]
+# tests/test_game_logic.py::test_guess_too_high PASSED                     [ 66%]
+# tests/test_game_logic.py::test_guess_too_low PASSED                      [ 77%]
+# tests/test_game_logic.py::test_too_high_hint_says_go_lower PASSED        [ 88%]
+# tests/test_game_logic.py::test_too_low_hint_says_go_higher PASSED        [100%]
+
+============================== 9 passed in 0.01s ===============================
 ```
-
-## 🚀 Stretch Features
-
-- [ ] [If you choose to complete Challenge 4, describe the Enhanced UI changes here — a screenshot is optional]
