@@ -9,8 +9,8 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
   (for example: "the hints were backwards").
 
   1. The hints weren't accurate. They were the opposite of what was expected.
-  2. The new game button doesn't work. It should start a new game on click.
-  3. Some guesses were missing from the history list. It should show all guesses submitted.
+  2. Some guesses were missing from the history list. It should show all guesses submitted.
+  3. When you lose the game and click on new game, it changes the secret, but it doens't let you add new guesses and the losing message still appears
 
 **Bug Reproduction Log**
 
@@ -19,7 +19,7 @@ Document at least 3 bugs you found. Add rows as needed.
 | Input | Expected Behavior | Actual Behavior | Console Output / Error |
 |-------|-------------------|-----------------|------------------------|
 | guess of 30 | "Go higher" hint shown | "Go lower" hint shown | None |
-| clicked new game button | Start a new game | Kept the same game | None |
+| Lost a game and clicked new game | new game begins | Losing message was still there and wasn't able to make a new guess | None |
 | guess of 2 | add guess to history list | guess was missing from list | None |
 
 ---
@@ -32,22 +32,25 @@ I used the Claude extension on Visual Studio
 
 - Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
 
-- AI suggested changing the messages for inverted hints. After reviewing the fix and generating tests for this change, I was able to verify that AI's suggestion for the fix was accurate.
+AI suggested changing the messages for inverted hints. After reviewing the fix and generating tests for this change, I was able to verify that AI's suggestion for the fix was accurate.
+
+Same with adding 2 additional lines to update the game status when a player lost. Once those two lines were added and I ran manual tests and pytests, this fix was verfied.
 
 - Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
 
+N/A
 ---
 
 ## 3. Debugging and testing your fixes
 
 - How did you decide whether a bug was really fixed?
 
-After the initial fix, I ran the app to verify that it was working smoothly. I also ran the tests to ensure it worked. 
+After the initial fix, I manually tested everything to verify that it was working smoothly. Upon creating pytests, I also ran them to ensure the solutions worked. 
 
 - Describe at least one test you ran (manual or using pytest)  
   and what it showed you about your code.
 
-I ran a manual test. I guessed one number above and one number below the secret. After running similar manual tests, I decided this particular bug was fixed (inverted hints)
+I ran a manual test for inverted hints. I guessed one number above and one number below the secret. After running similar manual tests, I decided this particular bug was fixed (inverted hints).
 
 - Did AI help you design or understand any tests? How?
 
